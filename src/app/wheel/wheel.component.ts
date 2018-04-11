@@ -18,15 +18,18 @@ export class WheelComponent implements OnInit {
     this.myWheel = new Winwheel({
       'canvasId': 'canvas',
       'numSegments': 4,
-      'textMargin': 14,
-      'textOrientation': 'curved',
+      // 'imageOverlay' : true,
       'segments' : [
-        {'fillStyle': '#eae56f', 'text': 'Segment 1'},
-        {'fillStyle': '#89f26e', 'text': 'Segment 2'},
-        {'fillStyle': '#7de6ef', 'text': 'Segment 3'},
-        {'fillStyle': '#e7706f', 'text': 'Segment 4'}
+        {'fillStyle' : '#eae56f', 'text' : 'Prize One'},
+        {'fillStyle' : '#89f26e', 'text' : 'Prize Two'},
+        {'fillStyle' : '#7de6ef', 'text' : 'Prize Three'},
+        {'fillStyle' : '#e7706f', 'text' : 'Prize Four'}
       ],
-      'lineWidth': 2
+      'animation': {
+        'type': 'spinToStop',
+        'duration': 5,
+        'spins': 8
+      }
     });
   }
 
@@ -53,4 +56,8 @@ export class WheelComponent implements OnInit {
     this.myWheel.draw();
   }
 
+  startSpin() {
+    console.log('fdsf');
+    this.myWheel.startAnimation();
+  }
 }

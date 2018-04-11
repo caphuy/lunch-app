@@ -178,7 +178,7 @@ module.exports = ""
 /***/ "./src/app/wheel/wheel.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <canvas id=\"canvas\" width=\"880\" height=\"300\">\n    Canvas not support, use other browser\n  </canvas>\n  <button (click)=\"changeColor()\">Change color</button>\n  <button (click)=\"addSegment()\">Add segment</button>\n  <button (click)=\"deleteSegment()\">Delete segment</button>\n</div>"
+module.exports = "<div>\n  <canvas id=\"canvas\" width=\"880\" height=\"300\">\n    Canvas not support, use other browser\n  </canvas>\n  <button (click)=\"changeColor()\">Change color</button>\n  <button (click)=\"addSegment()\">Add segment</button>\n  <button (click)=\"deleteSegment()\">Delete segment</button>\n  <button (click)=\"startSpin()\">Spin</button>\n</div>"
 
 /***/ }),
 
@@ -206,15 +206,18 @@ var WheelComponent = /** @class */ (function () {
         this.myWheel = new Winwheel({
             'canvasId': 'canvas',
             'numSegments': 4,
-            'textMargin': 14,
-            'textOrientation': 'curved',
+            // 'imageOverlay' : true,
             'segments': [
-                { 'fillStyle': '#eae56f', 'text': 'Segment 1' },
-                { 'fillStyle': '#89f26e', 'text': 'Segment 2' },
-                { 'fillStyle': '#7de6ef', 'text': 'Segment 3' },
-                { 'fillStyle': '#e7706f', 'text': 'Segment 4' }
+                { 'fillStyle': '#eae56f', 'text': 'Prize One' },
+                { 'fillStyle': '#89f26e', 'text': 'Prize Two' },
+                { 'fillStyle': '#7de6ef', 'text': 'Prize Three' },
+                { 'fillStyle': '#e7706f', 'text': 'Prize Four' }
             ],
-            'lineWidth': 2
+            'animation': {
+                'type': 'spinToStop',
+                'duration': 5,
+                'spins': 8
+            }
         });
     };
     WheelComponent.prototype.changeColor = function () {
@@ -236,6 +239,10 @@ var WheelComponent = /** @class */ (function () {
     WheelComponent.prototype.deleteSegment = function () {
         this.myWheel.deleteSegment();
         this.myWheel.draw();
+    };
+    WheelComponent.prototype.startSpin = function () {
+        console.log('fdsf');
+        this.myWheel.startAnimation();
     };
     WheelComponent = __decorate([
         core_1.Component({

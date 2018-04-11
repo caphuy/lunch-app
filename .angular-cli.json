@@ -22,7 +22,8 @@
         "styles.css"
       ],
       "scripts": [
-        "../node_modules/Winwheel.js"
+        "../node_modules/Winwheel.js",
+        "../node_modules/TweenMax.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

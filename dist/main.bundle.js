@@ -171,14 +171,14 @@ exports.PostsComponent = PostsComponent;
 /***/ "./src/app/wheel/wheel.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "#canvasContainer {\r\n  position: relative;\r\n  width: 300px;\r\n}\r\n\r\n#canvas {\r\n  z-index: 1;\r\n}\r\n\r\n#prizePointer {\r\n  position: absolute;\r\n  left: 125px;\r\n  top: 10;\r\n  z-index: 999;\r\n}\r\n\r\n"
 
 /***/ }),
 
 /***/ "./src/app/wheel/wheel.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <canvas id=\"canvas\" width=\"880\" height=\"300\">\n    Canvas not support, use other browser\n  </canvas>\n  <button (click)=\"changeColor()\">Change color</button>\n  <button (click)=\"addSegment()\">Add segment</button>\n  <button (click)=\"deleteSegment()\">Delete segment</button>\n  <button (click)=\"startSpin()\">Spin</button>\n</div>"
+module.exports = "<div id=\"canvasContainer\">\n  <img id=\"prizePointer\" src=\"https://i.imgur.com/wLzX7kR.png\" alt=\"V\" />\n  <canvas id=\"canvas\" width=\"300\" height=\"300\">\n    Canvas not support, use other browser\n  </canvas>\n\n  <button (click)=\"changeColor()\">Change color</button>\n  <button (click)=\"addSegment()\">Add segment</button>\n  <button (click)=\"deleteSegment()\">Delete segment</button>\n  <button (click)=\"startSpin()\">Spin</button>\n  <button (click)=\"resetSpin()\">Reset</button>\n</div>"
 
 /***/ }),
 
@@ -205,20 +205,28 @@ var WheelComponent = /** @class */ (function () {
         this.title = 'Wheel';
         this.myWheel = new Winwheel({
             'canvasId': 'canvas',
-            'numSegments': 4,
-            // 'imageOverlay' : true,
+            'numSegments': 8,
+            'outerRadius': 110,
+            'textFontSize': 15,
+            'pointerAngle': 90,
             'segments': [
-                { 'fillStyle': '#eae56f', 'text': 'Prize One' },
-                { 'fillStyle': '#89f26e', 'text': 'Prize Two' },
-                { 'fillStyle': '#7de6ef', 'text': 'Prize Three' },
-                { 'fillStyle': '#e7706f', 'text': 'Prize Four' }
+                { 'fillStyle': '#eae56f', 'text': 'Prize 1' },
+                { 'fillStyle': '#89f26e', 'text': 'Prize 2' },
+                { 'fillStyle': '#7de6ef', 'text': 'Prize 3' },
+                { 'fillStyle': '#e7706f', 'text': 'Prize 4' },
+                { 'fillStyle': '#eae56f', 'text': 'Prize 5' },
+                { 'fillStyle': '#89f26e', 'text': 'Prize 6' },
+                { 'fillStyle': '#7de6ef', 'text': 'Prize 7' },
+                { 'fillStyle': '#e7706f', 'text': 'Prize 8' }
             ],
             'animation': {
                 'type': 'spinToStop',
                 'duration': 5,
-                'spins': 8
+                'spins': 8,
+                'callbackFinished': this.alertPrize.bind(this),
             }
         });
+        // this.drawTriangle();
     };
     WheelComponent.prototype.changeColor = function () {
         var temp = this.myWheel.segments[1].fillStyle;
@@ -241,8 +249,35 @@ var WheelComponent = /** @class */ (function () {
         this.myWheel.draw();
     };
     WheelComponent.prototype.startSpin = function () {
-        console.log('fdsf');
+        this.myWheel.stopAnimation(false);
+        this.myWheel.rotationAngle = 0;
+        this.myWheel.draw();
         this.myWheel.startAnimation();
+    };
+    WheelComponent.prototype.resetSpin = function () {
+        this.myWheel.stopAnimation(false);
+        this.myWheel.rotationAngle = 0;
+        this.myWheel.draw();
+    };
+    WheelComponent.prototype.alertPrize = function () {
+        // Call getIndicatedSegment() function to return pointer to the segment pointed to on wheel.
+        var winningSegment = this.myWheel.getIndicatedSegment();
+        // Basic alert of the segment text which is the prize name.
+        alert('You have won ' + winningSegment.text + '!');
+    };
+    WheelComponent.prototype.drawTriangle = function () {
+        // Get the canvas context the wheel uses.
+        var ctx = this.myWheel.ctx;
+        ctx.strokeStyle = 'navy'; // Set line colour.
+        ctx.fillStyle = 'aqua'; // Set fill colour.
+        ctx.lineWidth = 2;
+        ctx.beginPath(); // Begin path.
+        ctx.moveTo(170, 5); // Move to initial position.
+        ctx.lineTo(230, 5); // Draw lines to make the shape.
+        ctx.lineTo(200, 40);
+        ctx.lineTo(171, 5);
+        ctx.stroke(); // Complete the path by stroking (draw lines).
+        ctx.fill(); // Then fill.
     };
     WheelComponent = __decorate([
         core_1.Component({

@@ -1,9 +1,12 @@
-<div>
-  <canvas id="canvas" width="880" height="300">
+<div id="canvasContainer">
+  <img id="prizePointer" src="https://i.imgur.com/wLzX7kR.png" alt="V" />
+  <canvas id="canvas" width="300" height="300">
     Canvas not support, use other browser
   </canvas>
+
   <button (click)="changeColor()">Change color</button>
   <button (click)="addSegment()">Add segment</button>
   <button (click)="deleteSegment()">Delete segment</button>
   <button (click)="startSpin()">Spin</button>
+  <button (click)="resetSpin()">Reset</button>
 </div>

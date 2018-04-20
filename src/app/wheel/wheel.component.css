@@ -1,16 +1,2 @@
-#canvasContainer {
-  position: relative;
-  width: 300px;
-}
 
-#canvas {
-  z-index: 1;
-}
-
-#prizePointer {
-  position: absolute;
-  left: 125px;
-  top: 10;
-  z-index: 999;
-}
 

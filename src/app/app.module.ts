@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
 import { WheelComponent } from './wheel/wheel.component';
 import 'rxjs/add/operator/map';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 const ROUTES = [
   {
@@ -26,7 +27,8 @@ const ROUTES = [
   declarations: [
     AppComponent,
     PostsComponent,
-    WheelComponent
+    WheelComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

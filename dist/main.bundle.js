@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>\n  {{title}}\n</h1>\n<router-outlet></router-outlet>"
+module.exports = "<div class=\"wrapper\">\n  <div class=\"sidebar\" data-background-color=\"white\" data-active-color=\"danger\">\n    <app-sidebar-cmp></app-sidebar-cmp>\n  </div>\n  <div class=\"main-panel\">\n    <div class=\"content\">\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -84,6 +84,7 @@ var app_component_1 = __webpack_require__("./src/app/app.component.ts");
 var posts_component_1 = __webpack_require__("./src/app/posts/posts.component.ts");
 var wheel_component_1 = __webpack_require__("./src/app/wheel/wheel.component.ts");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+var sidebar_component_1 = __webpack_require__("./src/app/sidebar/sidebar.component.ts");
 var ROUTES = [
     {
         path: '',
@@ -103,7 +104,8 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 app_component_1.AppComponent,
                 posts_component_1.PostsComponent,
-                wheel_component_1.WheelComponent
+                wheel_component_1.WheelComponent,
+                sidebar_component_1.SidebarComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -167,6 +169,74 @@ var PostsComponent = /** @class */ (function () {
     return PostsComponent;
 }());
 exports.PostsComponent = PostsComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/sidebar/sidebar.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/sidebar/sidebar.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"sidebar-wrapper\">\n  <div class=\"logo\">\n    Lunch App\n  </div>\n  <ul class=\"nav\">\n    <li *ngIf=\"isNotMobileMenu()\">\n      <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n        <i class=\"ti-panel\"></i>\n        <p>Stats</p>\n      </a>\n    </li>\n    <li class=\"dropdown\" *ngIf=\"isNotMobileMenu()\">\n      <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n        <i class=\"ti-bell\"></i>\n        <p class=\"notification\">5</p>\n        <p>Notifications</p>\n        <b class=\"caret\"></b>\n      </a>\n      <ul class=\"dropdown-menu\">\n        <li>\n          <a href=\"#\">Notification 1</a>\n        </li>\n        <li>\n          <a href=\"#\">Notification 2</a>\n        </li>\n        <li>\n          <a href=\"#\">Notification 3</a>\n        </li>\n        <li>\n          <a href=\"#\">Notification 4</a>\n        </li>\n        <li>\n          <a href=\"#\">Another notification</a>\n        </li>\n      </ul>\n    </li>\n    <li *ngIf=\"isNotMobileMenu()\">\n      <a href=\"#\">\n        <i class=\"ti-settings\"></i>\n        <p>Settings</p>\n      </a>\n    </li>\n    <li class=\"divider\" *ngIf=\"isNotMobileMenu()\"></li>\n    <li *ngFor=\"let menuItem of menuItems\" routerLinkActive=\"active\" class=\"{{menuItem.class}}\">\n      <a [routerLink]=\"[menuItem.path]\">\n        <i class=\"{{menuItem.icon}}\"></i>\n        <p>{{menuItem.title}}</p>\n      </a>\n    </li>\n  </ul>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/sidebar/sidebar.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+exports.ROUTES = [
+    { path: 'dashboard', title: 'Dashboard', icon: 'ti-panel', class: '' },
+    { path: 'user', title: 'User Profile', icon: 'ti-user', class: '' },
+    { path: 'table', title: 'Table List', icon: 'ti-view-list-alt', class: '' },
+    { path: 'typography', title: 'Typography', icon: 'ti-text', class: '' },
+    { path: 'icons', title: 'Icons', icon: 'ti-pencil-alt2', class: '' },
+    { path: 'maps', title: 'Maps', icon: 'ti-map', class: '' },
+    { path: 'notifications', title: 'Notifications', icon: 'ti-bell', class: '' },
+    { path: 'upgrade', title: 'Upgrade to PRO', icon: 'ti-export', class: 'active-pro' },
+];
+var SidebarComponent = /** @class */ (function () {
+    function SidebarComponent() {
+    }
+    SidebarComponent.prototype.ngOnInit = function () {
+        this.menuItems = exports.ROUTES.filter(function (menuItem) { return menuItem; });
+    };
+    SidebarComponent.prototype.isNotMobileMenu = function () {
+        if ($(window).width > 991) {
+            return false;
+        }
+        return true;
+    };
+    SidebarComponent = __decorate([
+        core_1.Component({
+            moduleId: module.i,
+            selector: 'app-sidebar-cmp',
+            template: __webpack_require__("./src/app/sidebar/sidebar.component.html"),
+            styles: [__webpack_require__("./src/app/sidebar/sidebar.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SidebarComponent);
+    return SidebarComponent;
+}());
+exports.SidebarComponent = SidebarComponent;
 
 
 /***/ }),

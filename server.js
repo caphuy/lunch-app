@@ -32,4 +32,4 @@ app.set('port', PORT);
 
 server.listen(PORT, () => {
   console.log('App listening on port ' + PORT);
-})
+});

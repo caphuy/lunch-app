@@ -8,6 +8,7 @@ const express = require('express'),
 
       app = express(),
       server = http.createServer(app),
+      io = require('socket.io')(server),
       
       PORT = process.env.PORT || 3000,
       DB_PATH = 'mongodb://localhost/lunchdb',
@@ -23,6 +24,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api', api);
+
+io.on('connection', (socket) => {
+    socket.emit('hello', {data: 'hello'});
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));

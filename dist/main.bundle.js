@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\n  <div class=\"sidebar\" data-background-color=\"white\" data-active-color=\"danger\">\n    <app-sidebar-cmp></app-sidebar-cmp>\n  </div>\n  <div class=\"main-panel\">\n    <div class=\"content\">\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"wrapper\">\n    <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#exampleModalLong\">\n        Login\n    </button>\n\n    <!-- Modal -->\n    <div class=\"modal blink\" id=\"exampleModalLong\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLongTitle\" aria-hidden=\"true\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <h5 class=\"modal-title\" id=\"exampleModalLongTitle\">Modal title</h5>\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                        <span aria-hidden=\"true\">&times;</span>\n                    </button>\n                </div>\n                <div class=\"modal-body\">\n                    ...\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n                    <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <router-outlet></router-outlet>\n</div>"
 
 /***/ }),
 
@@ -81,10 +81,8 @@ var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var http_1 = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
 var app_component_1 = __webpack_require__("./src/app/app.component.ts");
-var posts_component_1 = __webpack_require__("./src/app/posts/posts.component.ts");
 var wheel_component_1 = __webpack_require__("./src/app/wheel/wheel.component.ts");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
-var sidebar_component_1 = __webpack_require__("./src/app/sidebar/sidebar.component.ts");
 var ROUTES = [
     {
         path: '',
@@ -103,9 +101,7 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                posts_component_1.PostsComponent,
-                wheel_component_1.WheelComponent,
-                sidebar_component_1.SidebarComponent
+                wheel_component_1.WheelComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -119,124 +115,6 @@ var AppModule = /** @class */ (function () {
     return AppModule;
 }());
 exports.AppModule = AppModule;
-
-
-/***/ }),
-
-/***/ "./src/app/posts/posts.component.css":
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/posts/posts.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  posts works!\n</p>\n"
-
-/***/ }),
-
-/***/ "./src/app/posts/posts.component.ts":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var PostsComponent = /** @class */ (function () {
-    function PostsComponent() {
-    }
-    PostsComponent.prototype.ngOnInit = function () {
-    };
-    PostsComponent = __decorate([
-        core_1.Component({
-            selector: 'app-posts',
-            template: __webpack_require__("./src/app/posts/posts.component.html"),
-            styles: [__webpack_require__("./src/app/posts/posts.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], PostsComponent);
-    return PostsComponent;
-}());
-exports.PostsComponent = PostsComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/sidebar/sidebar.component.css":
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/sidebar/sidebar.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"sidebar-wrapper\">\n  <div class=\"logo\">\n    Lunch App\n  </div>\n  <ul class=\"nav\">\n    <li *ngIf=\"isNotMobileMenu()\">\n      <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n        <i class=\"ti-panel\"></i>\n        <p>Stats</p>\n      </a>\n    </li>\n    <li class=\"dropdown\" *ngIf=\"isNotMobileMenu()\">\n      <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n        <i class=\"ti-bell\"></i>\n        <p class=\"notification\">5</p>\n        <p>Notifications</p>\n        <b class=\"caret\"></b>\n      </a>\n      <ul class=\"dropdown-menu\">\n        <li>\n          <a href=\"#\">Notification 1</a>\n        </li>\n        <li>\n          <a href=\"#\">Notification 2</a>\n        </li>\n        <li>\n          <a href=\"#\">Notification 3</a>\n        </li>\n        <li>\n          <a href=\"#\">Notification 4</a>\n        </li>\n        <li>\n          <a href=\"#\">Another notification</a>\n        </li>\n      </ul>\n    </li>\n    <li *ngIf=\"isNotMobileMenu()\">\n      <a href=\"#\">\n        <i class=\"ti-settings\"></i>\n        <p>Settings</p>\n      </a>\n    </li>\n    <li class=\"divider\" *ngIf=\"isNotMobileMenu()\"></li>\n    <li *ngFor=\"let menuItem of menuItems\" routerLinkActive=\"active\" class=\"{{menuItem.class}}\">\n      <a [routerLink]=\"[menuItem.path]\">\n        <i class=\"{{menuItem.icon}}\"></i>\n        <p>{{menuItem.title}}</p>\n      </a>\n    </li>\n  </ul>\n</div>"
-
-/***/ }),
-
-/***/ "./src/app/sidebar/sidebar.component.ts":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-exports.ROUTES = [
-    { path: 'dashboard', title: 'Dashboard', icon: 'ti-panel', class: '' },
-    { path: 'user', title: 'User Profile', icon: 'ti-user', class: '' },
-    { path: 'table', title: 'Table List', icon: 'ti-view-list-alt', class: '' },
-    { path: 'typography', title: 'Typography', icon: 'ti-text', class: '' },
-    { path: 'icons', title: 'Icons', icon: 'ti-pencil-alt2', class: '' },
-    { path: 'maps', title: 'Maps', icon: 'ti-map', class: '' },
-    { path: 'notifications', title: 'Notifications', icon: 'ti-bell', class: '' },
-    { path: 'upgrade', title: 'Upgrade to PRO', icon: 'ti-export', class: 'active-pro' },
-];
-var SidebarComponent = /** @class */ (function () {
-    function SidebarComponent() {
-    }
-    SidebarComponent.prototype.ngOnInit = function () {
-        this.menuItems = exports.ROUTES.filter(function (menuItem) { return menuItem; });
-    };
-    SidebarComponent.prototype.isNotMobileMenu = function () {
-        if ($(window).width > 991) {
-            return false;
-        }
-        return true;
-    };
-    SidebarComponent = __decorate([
-        core_1.Component({
-            moduleId: module.i,
-            selector: 'app-sidebar-cmp',
-            template: __webpack_require__("./src/app/sidebar/sidebar.component.html"),
-            styles: [__webpack_require__("./src/app/sidebar/sidebar.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], SidebarComponent);
-    return SidebarComponent;
-}());
-exports.SidebarComponent = SidebarComponent;
 
 
 /***/ }),
@@ -337,7 +215,7 @@ module.exports = "\r\n\r\n"
 /***/ "./src/app/wheel/wheel.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"canvasContainer\">\n  <canvas id=\"canvas\" width=\"300\" height=\"300\" #canvas>\n    Canvas not support, use other browser\n  </canvas>\n\n  <button (click)=\"changeColor()\">Change color</button>\n  <button (click)=\"addSegment()\">Add segment</button>\n  <button (click)=\"deleteSegment()\">Delete segment</button>\n  <button (click)=\"startSpin()\">Spin</button>\n  <button (click)=\"resetSpin()\">Reset</button>\n</div>"
+module.exports = "<div id=\"canvasContainer\">\n  <canvas id=\"canvas\" width=\"300\" height=\"300\" #canvas>\n    Canvas not support, use other browser\n  </canvas>\n\n  <button (click)=\"changeColor()\">Change color</button>\n  <button (click)=\"addSegment()\">Add segment</button>\n  <button (click)=\"deleteSegment()\">Delete segment</button>\n  <button (click)=\"startSpin()\">Spin</button>\n  <button (click)=\"resetSpin()\">Reset</button>\n\n  <form>\n    <input type=\"color\" name=\"favcolor\" value=\"#ff0000\">\n  </form>\n</div>"
 
 /***/ }),
 
@@ -359,10 +237,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var spin_service_1 = __webpack_require__("./src/app/spin.service.ts");
 var utils_service_1 = __webpack_require__("./src/app/utils.service.ts");
+var io = __webpack_require__("./node_modules/socket.io-client/lib/index.js");
 var WheelComponent = /** @class */ (function () {
     function WheelComponent(spinService, utilsService) {
         this.spinService = spinService;
         this.utilsService = utilsService;
+        this.socket = io('http://localhost:3000');
+        this.socket.on('hello', function (data) {
+            console.log(data);
+        });
     }
     WheelComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -531,6 +414,13 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 
 module.exports = __webpack_require__("./src/main.ts");
 
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 

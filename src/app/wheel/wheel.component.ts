@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { Observable } from 'rxjs/Observable';
 import { SpinService } from './../spin.service';
 import { UtilsService } from './../utils.service';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-wheel',
@@ -14,9 +15,16 @@ export class WheelComponent implements OnInit {
   private title: String;
   private myWheel: any;
   private onMoveSegment: any;
+  private socket;
+
   @ViewChild('canvas') canvas: ElementRef;
 
-  constructor(private spinService: SpinService, private utilsService: UtilsService) { }
+  constructor(private spinService: SpinService, private utilsService: UtilsService) { 
+    this.socket = io('http://localhost:3000');
+    this.socket.on('hello', (data: any) => {
+        console.log(data);
+    });
+  }
 
   ngOnInit() {
     this.title = 'Wheel';

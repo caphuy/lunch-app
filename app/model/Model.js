@@ -1,6 +1,8 @@
 'use strict';
+const mongoose = require('mongoose');
 
-export const user = mongoose.model('User', mongoose.Schema({
+
+const user = mongoose.model('User', mongoose.Schema({
   username: {
     type: String,
     required: true
@@ -35,7 +37,7 @@ export const user = mongoose.model('User', mongoose.Schema({
   }
 }));
 
-export const friend = mongoose.model('Friend', mongoose.Schema({
+const friend = mongoose.model('Friend', mongoose.Schema({
   requester: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
@@ -46,7 +48,7 @@ export const friend = mongoose.model('Friend', mongoose.Schema({
   }
 }));
 
-export const group = mongoose.model('Group', mongoose.Schema({
+const group = mongoose.model('Group', mongoose.Schema({
   company: String,
   location: {
     country: String,
@@ -55,7 +57,7 @@ export const group = mongoose.model('Group', mongoose.Schema({
   }
 }));
 
-export const dish = mongoose.model('Dish', mongoose.Schema({
+const dish = mongoose.model('Dish', mongoose.Schema({
   name: String,
   isDeleted: {
     type: Boolean,
@@ -69,14 +71,14 @@ export const dish = mongoose.model('Dish', mongoose.Schema({
     type: Date,
     default: new Date()
   },
-  location: {
-    country: String,
-    province: String,
-    street: String
-  }
+//   location: {
+//     country: String,
+//     province: String,
+//     street: String
+//   }
 }));
 
-export const message = mongoose.model('Message', mongooose.Schema({
+const message = mongoose.model('Message', mongoose.Schema({
   message: {
     type: String,
     required: true
@@ -103,7 +105,7 @@ export const message = mongoose.model('Message', mongooose.Schema({
   }
 }));
 
-export const listGroupDish = mongoose.model('ListGroupDish', mongoose.Schema({
+const listGroupDish = mongoose.model('ListGroupDish', mongoose.Schema({
   group: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
@@ -114,7 +116,7 @@ export const listGroupDish = mongoose.model('ListGroupDish', mongoose.Schema({
   }
 }));
 
-export const spin = mongoose.model('Spin', mongoose.Schema({
+const spin = mongoose.model('Spin', mongoose.Schema({
   won: {
     type: Number,
     required: true
@@ -126,3 +128,8 @@ export const spin = mongoose.model('Spin', mongoose.Schema({
     default: new Date()
   }
 }));
+
+module.exports = {
+    spin: spin,
+    dish: dish
+}

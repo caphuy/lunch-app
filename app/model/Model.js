@@ -78,6 +78,12 @@ const dish = mongoose.model('Dish', mongoose.Schema({
 //   }
 }));
 
+const piece = mongoose.model('Piece', mongoose.Schema({
+    dish: mongoose.Schema.Types.ObjectId,
+    fillStyle: String,
+    
+}));
+
 const message = mongoose.model('Message', mongoose.Schema({
   message: {
     type: String,

@@ -17,6 +17,24 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
+/***/ "./src/app/AppSettings.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AppSettings = /** @class */ (function () {
+    function AppSettings() {
+    }
+    AppSettings.API_ENDPOINT = 'http://localhost:9000/api';
+    AppSettings.SOCKET_ENDPOINT = 'http://localhost:9000';
+    return AppSettings;
+}());
+exports.AppSettings = AppSettings;
+
+
+/***/ }),
+
 /***/ "./src/app/app.component.css":
 /***/ (function(module, exports) {
 
@@ -27,7 +45,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\n    <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#exampleModalLong\">\n        Login\n    </button>\n\n    <!-- Modal -->\n    <div class=\"modal blink\" id=\"exampleModalLong\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLongTitle\" aria-hidden=\"true\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <h5 class=\"modal-title\" id=\"exampleModalLongTitle\">Modal title</h5>\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                        <span aria-hidden=\"true\">&times;</span>\n                    </button>\n                </div>\n                <div class=\"modal-body\">\n                    ...\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n                    <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <router-outlet></router-outlet>\n</div>"
+module.exports = "<div class=\"container-fluid\">\n    <router-outlet></router-outlet>\n</div>"
 
 /***/ }),
 
@@ -234,6 +252,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var AppSettings_1 = __webpack_require__("./src/app/AppSettings.ts");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var spin_service_1 = __webpack_require__("./src/app/spin.service.ts");
 var utils_service_1 = __webpack_require__("./src/app/utils.service.ts");
@@ -242,7 +261,7 @@ var WheelComponent = /** @class */ (function () {
     function WheelComponent(spinService, utilsService) {
         this.spinService = spinService;
         this.utilsService = utilsService;
-        this.socket = io('http://localhost:3000');
+        this.socket = io(AppSettings_1.AppSettings.SOCKET_ENDPOINT);
         this.socket.on('hello', function (data) {
             console.log(data);
         });
@@ -417,7 +436,7 @@ module.exports = __webpack_require__("./src/main.ts");
 
 /***/ }),
 
-/***/ 3:
+/***/ 1:
 /***/ (function(module, exports) {
 
 /* (ignored) */

@@ -10,7 +10,7 @@ const express = require('express'),
       server = http.createServer(app),
       io = require('socket.io')(server),
       
-      PORT = process.env.PORT || 3000,
+      PORT = process.env.PORT || 9000,
       DB_PATH = 'mongodb://localhost/lunchdb',
 
       api = require('./app/routes/api')

@@ -1,7 +1,7 @@
 import { AppSettings } from './../AppSettings';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { SpinService } from './../spin.service';
+import { SpinService } from './../service/spin.service';
 import { UtilsService } from './../utils.service';
 import * as io from 'socket.io-client';
 
@@ -20,7 +20,7 @@ export class WheelComponent implements OnInit {
 
   @ViewChild('canvas') canvas: ElementRef;
 
-  constructor(private spinService: SpinService, private utilsService: UtilsService) { 
+  constructor(private spinService: SpinService, private utilsService: UtilsService) {
     this.socket = io(AppSettings.SOCKET_ENDPOINT);
     this.socket.on('hello', (data: any) => {
         console.log(data);

@@ -10,7 +10,7 @@ router.get('/spin', (req, res) => {
   });
 });
 
-router.get('/getDishes', async (req, res) => {
+router.get('/get_dishes', async (req, res) => {
     model.dish.find().then(data => {
         res.json({
             status: 1,
@@ -22,10 +22,9 @@ router.get('/getDishes', async (req, res) => {
             error: e
         });
     });
-    
 });
 
-router.post('/addDish', async (req, res) => {
+router.post('/add_dish', async (req, res) => {
     let name = req.body.name;
     model.dish.create({
         name: name
@@ -40,6 +39,10 @@ router.post('/addDish', async (req, res) => {
             error: e
         });
     });
+});
+
+router.post('/register', (req, res) => {
+
 });
 
 module.exports = router;

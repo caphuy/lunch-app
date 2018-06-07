@@ -93,23 +93,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_service_1 = __webpack_require__("./src/app/utils.service.ts");
-var spin_service_1 = __webpack_require__("./src/app/spin.service.ts");
+var spin_service_1 = __webpack_require__("./src/app/service/spin.service.ts");
+var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
 var platform_browser_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var http_1 = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var forms_2 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var app_component_1 = __webpack_require__("./src/app/app.component.ts");
 var wheel_component_1 = __webpack_require__("./src/app/wheel/wheel.component.ts");
+var login_component_1 = __webpack_require__("./src/app/login/login.component.ts");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 var ROUTES = [
     {
         path: '',
-        redirectTo: 'wheel',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
     {
         path: 'wheel',
         component: wheel_component_1.WheelComponent
+    },
+    {
+        path: 'login',
+        component: login_component_1.LoginComponent
     }
 ];
 var AppModule = /** @class */ (function () {
@@ -119,14 +127,17 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                wheel_component_1.WheelComponent
+                wheel_component_1.WheelComponent,
+                login_component_1.LoginComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
-                router_1.RouterModule.forRoot(ROUTES)
+                router_1.RouterModule.forRoot(ROUTES),
+                forms_1.ReactiveFormsModule,
+                forms_2.FormsModule
             ],
-            providers: [spin_service_1.SpinService, utils_service_1.UtilsService],
+            providers: [spin_service_1.SpinService, utils_service_1.UtilsService, user_service_1.UserService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
@@ -137,7 +148,63 @@ exports.AppModule = AppModule;
 
 /***/ }),
 
-/***/ "./src/app/spin.service.ts":
+/***/ "./src/app/login/login.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n    <h1>Lunch app</h1>\n    <form (ngSubmit)=\"onSubmit()\" >\n      <div class=\"form-group\">\n        <label for=\"username\">Username</label>\n        <input type=\"text\" class=\"form-control\" id=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" class=\"form-control\" id=\"password\">\n      </div>\n\n      <input type=\"submit\" class=\"btn btn-success\" value=\"Login\" />\n      <button class=\"btn btn-success\">Register</button>\n    </form>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
+var LoginComponent = /** @class */ (function () {
+    function LoginComponent(userService) {
+        this.userService = userService;
+        this.submitted = false;
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+    };
+    LoginComponent.prototype.onSubmit = function () {
+        this.userService.fbLogin();
+    };
+    LoginComponent = __decorate([
+        core_1.Component({
+            selector: 'app-login',
+            template: __webpack_require__("./src/app/login/login.component.html"),
+            styles: [__webpack_require__("./src/app/login/login.component.css")]
+        }),
+        __metadata("design:paramtypes", [user_service_1.UserService])
+    ], LoginComponent);
+    return LoginComponent;
+}());
+exports.LoginComponent = LoginComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/service/spin.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -169,6 +236,52 @@ var SpinService = /** @class */ (function () {
     return SpinService;
 }());
 exports.SpinService = SpinService;
+
+
+/***/ }),
+
+/***/ "./src/app/service/user.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var UserService = /** @class */ (function () {
+    function UserService() {
+        FB.init({
+            appId: '500315193719940',
+            status: false,
+            cookie: false,
+            xfbml: false,
+            version: 'v2.8'
+        });
+    }
+    UserService.prototype.fbLogin = function () {
+        return new Promise(function (resolve, reject) {
+            FB.login(function (result) {
+                if (result.authResponse) {
+                    return result.authResponse.accessToken;
+                }
+            }, { scope: 'public_profile,email' });
+        });
+    };
+    UserService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [])
+    ], UserService);
+    return UserService;
+}());
+exports.UserService = UserService;
 
 
 /***/ }),
@@ -254,7 +367,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var AppSettings_1 = __webpack_require__("./src/app/AppSettings.ts");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var spin_service_1 = __webpack_require__("./src/app/spin.service.ts");
+var spin_service_1 = __webpack_require__("./src/app/service/spin.service.ts");
 var utils_service_1 = __webpack_require__("./src/app/utils.service.ts");
 var io = __webpack_require__("./node_modules/socket.io-client/lib/index.js");
 var WheelComponent = /** @class */ (function () {

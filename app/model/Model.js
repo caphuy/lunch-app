@@ -11,6 +11,12 @@ const user = mongoose.model('User', mongoose.Schema({
     type: String,
     required: true
   },
+  facebook: {
+    id: String,
+    token: String,
+    name: String,
+    email: []
+  },
   details: {
     fullname: String,
     email: String,

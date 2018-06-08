@@ -2,46 +2,6 @@
 const mongoose = require('mongoose');
 
 
-const user = mongoose.model('User', mongoose.Schema({
-  username: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  facebook: {
-    id: String,
-    token: String,
-    name: String,
-    email: []
-  },
-  details: {
-    fullname: String,
-    email: String,
-    avatar: String,
-    phone: String,
-    address: String,
-    description: String
-  },
-  created: {
-    type: Date,
-    default: new Date()
-  },
-  updated: {
-    type: Date,
-    default: new Date()
-  },
-  isBlocked: {
-    type: Boolean,
-    default: false
-  },
-  isDeleted: {
-    type: Boolean,
-    default: false
-  }
-}));
 
 const friend = mongoose.model('Friend', mongoose.Schema({
   requester: {
@@ -77,11 +37,11 @@ const dish = mongoose.model('Dish', mongoose.Schema({
     type: Date,
     default: new Date()
   },
-//   location: {
-//     country: String,
-//     province: String,
-//     street: String
-//   }
+  location: {
+    country: String,
+    province: String,
+    street: String
+  }
 }));
 
 const piece = mongoose.model('Piece', mongoose.Schema({

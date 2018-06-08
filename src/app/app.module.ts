@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { WheelComponent } from './wheel/wheel.component';
 import { LoginComponent } from './login/login.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import 'rxjs/add/operator/map';
 
 const ROUTES = [
@@ -26,7 +28,15 @@ const ROUTES = [
   {
     path: 'login',
     component: LoginComponent
-  }
+  },
+  {
+    path: 'welcome',
+    component: WelcomeComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
 ];
 
 @NgModule({
@@ -34,6 +44,8 @@ const ROUTES = [
     AppComponent,
     WheelComponent,
     LoginComponent,
+    DashboardComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,

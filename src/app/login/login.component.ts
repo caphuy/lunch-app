@@ -7,6 +7,7 @@ import { UserService } from './../service/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
   heroForm: FormGroup;
@@ -18,8 +19,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
-    this.userService.fbLogin();
+  async onSubmit() {
+    console.log(await this.userService.fbLogin());
   }
 
 }

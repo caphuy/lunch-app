@@ -45,7 +45,6 @@ var User = mongoose.model('User', mongoose.Schema({
 
 User.upsertFbUser = function (accessToken, refreshToken, profile, callback) {
   let self = this;
-  console.log(profile);
   return self.findOneAndUpdate({
     'facebook.id': profile.id
   }, {

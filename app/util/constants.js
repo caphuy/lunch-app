@@ -9,6 +9,7 @@ module.exports = {
   PORT: process.env.PORT || 9000,
 
   // Authentication
-  SECRET: 'my-lunch-app'
+  SECRET: 'my-lunch-app',
+  HEADER_AUTH: 'x-auth-token'
 
 }

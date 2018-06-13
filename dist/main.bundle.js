@@ -337,14 +337,14 @@ exports.AuthGuard = AuthGuard;
 /***/ "./src/app/login/login.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "::-webkit-input-placeholder { /* Chrome/Opera/Safari */\r\n  color: #b8bac5;\r\n}\r\n::-moz-placeholder { /* Firefox 19+ */\r\n  color: #b8bac5;\r\n}\r\n:-ms-input-placeholder { /* IE 10+ */\r\n  color: #b8bac5;\r\n}\r\n:-moz-placeholder { /* Firefox 18- */\r\n  color: #b8bac5;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <h1>Lunch app</h1>\n    <form (ngSubmit)=\"onSubmit()\" >\n      <div class=\"form-group\">\n        <label for=\"username\">Username</label>\n        <input type=\"text\" class=\"form-control\" id=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" class=\"form-control\" id=\"password\">\n      </div>\n\n      <input type=\"submit\" class=\"btn btn-success\" value=\"Login\" />\n      <button class=\"btn btn-success\">Register</button>\n    </form>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"col-sm-4\">\n    <form (ngSubmit)=\"onSubmit()\" >\n      <div class=\"form-group\">\n        <input type=\"text\" placeholder=\"USERNAME\" class=\"form-control\" id=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <input type=\"password\" placeholder=\"PASSWORD\" class=\"form-control\" id=\"password\">\n      </div>\n\n      <input type=\"submit\" class=\"btn btn-success\" value=\"Login\" />\n      <button class=\"btn btn-success\">Register</button>\n    </form>\n  </div>\n</div>"
 
 /***/ }),
 

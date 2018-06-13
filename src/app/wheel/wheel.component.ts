@@ -2,8 +2,10 @@ import { AppSettings } from './../AppSettings';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { SpinService } from './../service/spin.service';
-import { UtilsService } from './../utils.service';
+import { UtilsService } from '../util/utils.service';
+
 import * as io from 'socket.io-client';
+
 
 @Component({
   selector: 'app-wheel',

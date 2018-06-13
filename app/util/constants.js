@@ -10,6 +10,10 @@ module.exports = {
 
   // Authentication
   SECRET: 'my-lunch-app',
-  HEADER_AUTH: 'x-auth-token'
+  HEADER_AUTH: 'x-auth-token',
+
+  // Error code
+  ERR_USERNAME: 'E001',
+  ERR_PASSWORD: 'E002',
 
 }

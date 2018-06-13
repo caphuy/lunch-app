@@ -1,6 +1,14 @@
 const express = require('express'),
       router = express.Router(),
-      model = require('../model/model');
+      model = require('../model/model'),
+      userController = require('../controller/user-controller'),
+      authService = require('../service/auth-service');
+
+router.get('/auth/me', authService.authenticate, userController.authMe);
+
+router.post('/signin', userController.signin);
+
+router.post('/signup', userController.signup);
 
 router.get('/spin', (req, res) => {
   const won = Math.floor(Math.random() * 360);
@@ -39,10 +47,6 @@ router.post('/add_dish', async (req, res) => {
             error: e
         });
     });
-});
-
-router.post('/register', (req, res) => {
-    
 });
 
 module.exports = router;

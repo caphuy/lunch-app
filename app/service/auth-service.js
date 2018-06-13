@@ -1,9 +1,6 @@
 const jwt = require('jsonwebtoken'),
-      expressJwt = require('express-jwt'),
-      Constants = require('../util/constants')
-
- const REQUEST_PROPERTY = 'auth'
-      ;
+      Constants = require('../util/constants'),
+      reponseFactory = require('../factory/response-factory');
 
 const self = module.exports = {
 
@@ -14,26 +11,35 @@ const self = module.exports = {
       expiresIn: 60 * 120
     });
   },
- 
+
   generateToken: (req, res, next) => {
     req.token = self.createToken(req.auth);
     next();
-  },
+  }, 
 
   sendToken: (req, res) => {
-    res.setHeader(Constants.X_AUTH_TOKEN, req.token);
+    res.setHeader(Constants.HEADER_AUTH, req.token);
     res.status(200).send(req.auth);
   },
 
-  authenticate: expressJwt({
-    secret: Constants.SECRET,
-    requestProperty: REQUEST_PROPERTY,
-    getToken: (req) => {
-      if (req.headers[Constants.X_AUTH_TOKEN]) {
-        return req.headers(Constants.X_AUTH_TOKEN);
-      }
-      return null;
+  authenticate: (req, res, next) => {
+    const token = req.headers[Constants.HEADER_AUTH];
+    if (token !== void(0)) {
+      jwt.verify(token, Constants.SECRET, (err, decoded) => {
+        if (!err) {
+          req.uid = decoded.id;
+          next();
+        } else {
+          res.status(401).json(
+            reponseFactory.errorResponse(res, 401, 401)
+          );
+        }
+      });
+    } else {
+      res.status(401).json({
+        err: 'not auth'
+      });
     }
-  })
+  }
 
 }

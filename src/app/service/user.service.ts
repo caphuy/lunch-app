@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { AuthHttp } from 'angular2-jwt';
 import { Http } from '@angular/http';
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authHttp: AuthHttp) {
     FB.init({
       appId      : '500315193719940',
       status     : false,
@@ -18,7 +19,6 @@ export class UserService {
     return new Promise((resolve, reject) => {
       FB.login(result => {
         if (result.authResponse) {
-          resolve(result.authResponse.accessToken);
           return this.http.post('http://localhost:9000/auth/facebook', {access_token: result.authResponse.accessToken})
           .toPromise()
           .then(response => {
@@ -28,8 +28,9 @@ export class UserService {
             }
             resolve(response.json());
           })
-          .catch(() => reject());
-          // return result.authResponse.accessToken;
+          .catch((err) => {
+            reject(err);
+          });
         } else {
           reject();
         }
@@ -39,7 +40,7 @@ export class UserService {
 
   isLoggedIn() {
     return new Promise((resolve, reject) => {
-      this.getCurrentUser().then(user => {
+      this.getCurrentUser().then(data => {
         resolve(true);
       })
       .catch(() => {
@@ -50,11 +51,11 @@ export class UserService {
 
   getCurrentUser() {
     return new Promise((resolve, reject) => {
-      return this.http.get('http://localhost:9000/api/auth/me').toPromise().then(response => {
-        resolve(response.json());
+      return this.authHttp.get('http://localhost:9000/api/auth/me').toPromise().then(response => {
+        resolve(true);
       })
-      .catch(() => {
-        reject();
+      .catch((err) => {
+        reject(false);
       });
     });
   }

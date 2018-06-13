@@ -1,6 +1,10 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+      bcrypt = require('bcrypt'),
+      saltRounds = 10
+      
+      ;
 
 var User = mongoose.model('User', mongoose.Schema({
   username: {
@@ -59,6 +63,38 @@ User.upsertFbUser = function (accessToken, refreshToken, profile, callback) {
     upsert: true,
     new: true
   }, callback);
-}
+};
+
+User.signup = function (user) {
+  return new Promise((resolve, reject) => {
+    const salt = bcrypt.genSaltSync(saltRounds);
+    user.password = bcrypt.hashSync(user.password, salt);
+    const newUser = new User(user);
+    newUser.save((err, userSaved) => {
+      if (!err) {
+        resolve(userSaved._id);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
+
+User.signin = async function (username, password) {
+  const self = this;
+  const user = await self.findOne({
+    username: username
+  });
+  if (user !== null) {
+    if (bcrypt.compareSync(password, user.password)) {
+      delete user.password;
+      return user._id;
+    } else {
+      return -1;
+    }
+  } else {
+    return 0;
+  }
+};
 
 module.exports = User;

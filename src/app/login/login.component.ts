@@ -1,5 +1,6 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+
 import { UserService } from './../service/user.service';
 
 @Component({
@@ -10,17 +11,17 @@ import { UserService } from './../service/user.service';
 
 export class LoginComponent implements OnInit {
 
-  heroForm: FormGroup;
-
-  submitted = false;
-
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
   }
 
   async onSubmit() {
-    console.log(await this.userService.fbLogin());
+    this.userService.fbLogin().then(data => {
+      this.router.navigate(['/dashboard']);
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
 }

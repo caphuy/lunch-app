@@ -92,7 +92,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var utils_service_1 = __webpack_require__("./src/app/utils.service.ts");
+var angular2_jwt_1 = __webpack_require__("./node_modules/angular2-jwt/angular2-jwt.js");
+var utils_service_1 = __webpack_require__("./src/app/util/utils.service.ts");
 var spin_service_1 = __webpack_require__("./src/app/service/spin.service.ts");
 var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
 var platform_browser_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
@@ -106,6 +107,8 @@ var wheel_component_1 = __webpack_require__("./src/app/wheel/wheel.component.ts"
 var login_component_1 = __webpack_require__("./src/app/login/login.component.ts");
 var welcome_component_1 = __webpack_require__("./src/app/welcome/welcome.component.ts");
 var dashboard_component_1 = __webpack_require__("./src/app/dashboard/dashboard.component.ts");
+var anonymous_guard_1 = __webpack_require__("./src/app/guard/anonymous-guard.ts");
+var auth_guard_1 = __webpack_require__("./src/app/guard/auth-guard.ts");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 var ROUTES = [
     {
@@ -123,13 +126,25 @@ var ROUTES = [
     },
     {
         path: 'welcome',
-        component: welcome_component_1.WelcomeComponent
+        component: welcome_component_1.WelcomeComponent,
+        canActivate: [anonymous_guard_1.AnonymousGuard]
     },
     {
         path: 'dashboard',
-        component: dashboard_component_1.DashboardComponent
+        component: dashboard_component_1.DashboardComponent,
+        canActivate: [auth_guard_1.AuthGuard]
     },
 ];
+function getAuthHttp(http, options) {
+    return new angular2_jwt_1.AuthHttp(new angular2_jwt_1.AuthConfig({
+        headerName: 'x-auth-token',
+        noTokenScheme: true,
+        noJwtError: true,
+        globalHeaders: [{ 'Accept': 'application/json' }],
+        tokenGetter: (function () { return localStorage.getItem('id_token'); }),
+    }), http, options);
+}
+exports.getAuthHttp = getAuthHttp;
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -149,7 +164,18 @@ var AppModule = /** @class */ (function () {
                 forms_1.ReactiveFormsModule,
                 forms_2.FormsModule
             ],
-            providers: [spin_service_1.SpinService, utils_service_1.UtilsService, user_service_1.UserService],
+            providers: [
+                {
+                    provide: angular2_jwt_1.AuthHttp,
+                    useFactory: getAuthHttp,
+                    deps: [http_1.Http, http_1.RequestOptions]
+                },
+                auth_guard_1.AuthGuard,
+                anonymous_guard_1.AnonymousGuard,
+                spin_service_1.SpinService,
+                utils_service_1.UtilsService,
+                user_service_1.UserService,
+            ],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
@@ -206,6 +232,104 @@ var DashboardComponent = /** @class */ (function () {
     return DashboardComponent;
 }());
 exports.DashboardComponent = DashboardComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/guard/anonymous-guard.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var AnonymousGuard = /** @class */ (function () {
+    function AnonymousGuard(userService, router) {
+        this.userService = userService;
+        this.router = router;
+    }
+    AnonymousGuard.prototype.canActivate = function (route, state) {
+        return this.checkLogin();
+    };
+    AnonymousGuard.prototype.checkLogin = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.userService.isLoggedIn().then(function () {
+                _this.router.navigate(['/dashboard']);
+                reject(false);
+            })
+                .catch(function () {
+                resolve(true);
+            });
+        });
+    };
+    AnonymousGuard = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [user_service_1.UserService, router_1.Router])
+    ], AnonymousGuard);
+    return AnonymousGuard;
+}());
+exports.AnonymousGuard = AnonymousGuard;
+
+
+/***/ }),
+
+/***/ "./src/app/guard/auth-guard.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
+var AuthGuard = /** @class */ (function () {
+    function AuthGuard(userService, router) {
+        this.userService = userService;
+        this.router = router;
+    }
+    AuthGuard.prototype.canActivate = function (route, state) {
+        return this.checkLogin();
+    };
+    AuthGuard.prototype.checkLogin = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.userService.isLoggedIn().then(function () {
+                resolve(true);
+            })
+                .catch(function () {
+                _this.router.navigate(['/welcome']);
+                reject(false);
+            });
+        });
+    };
+    AuthGuard = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [user_service_1.UserService, router_1.Router])
+    ], AuthGuard);
+    return AuthGuard;
+}());
+exports.AuthGuard = AuthGuard;
 
 
 /***/ }),
@@ -274,27 +398,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(userService) {
+    function LoginComponent(userService, router) {
         this.userService = userService;
-        this.submitted = false;
+        this.router = router;
     }
     LoginComponent.prototype.ngOnInit = function () {
     };
     LoginComponent.prototype.onSubmit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _b = (_a = console).log;
-                        return [4 /*yield*/, this.userService.fbLogin()];
-                    case 1:
-                        _b.apply(_a, [_c.sent()]);
-                        return [2 /*return*/];
-                }
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.userService.fbLogin().then(function (data) {
+                    _this.router.navigate(['/dashboard']);
+                }).catch(function (err) {
+                    console.log(err);
+                });
+                return [2 /*return*/];
             });
         });
     };
@@ -304,7 +427,7 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/login/login.component.html"),
             styles: [__webpack_require__("./src/app/login/login.component.css")]
         }),
-        __metadata("design:paramtypes", [user_service_1.UserService])
+        __metadata("design:paramtypes", [user_service_1.UserService, router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -365,10 +488,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var angular2_jwt_1 = __webpack_require__("./node_modules/angular2-jwt/angular2-jwt.js");
 var http_1 = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
 var UserService = /** @class */ (function () {
-    function UserService(http) {
+    function UserService(http, authHttp) {
         this.http = http;
+        this.authHttp = authHttp;
         FB.init({
             appId: '500315193719940',
             status: false,
@@ -382,7 +507,6 @@ var UserService = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             FB.login(function (result) {
                 if (result.authResponse) {
-                    resolve(result.authResponse.accessToken);
                     return _this.http.post('http://localhost:9000/auth/facebook', { access_token: result.authResponse.accessToken })
                         .toPromise()
                         .then(function (response) {
@@ -392,8 +516,9 @@ var UserService = /** @class */ (function () {
                         }
                         resolve(response.json());
                     })
-                        .catch(function () { return reject(); });
-                    // return result.authResponse.accessToken;
+                        .catch(function (err) {
+                        reject(err);
+                    });
                 }
                 else {
                     reject();
@@ -404,7 +529,7 @@ var UserService = /** @class */ (function () {
     UserService.prototype.isLoggedIn = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            _this.getCurrentUser().then(function (user) {
+            _this.getCurrentUser().then(function (data) {
                 resolve(true);
             })
                 .catch(function () {
@@ -415,17 +540,17 @@ var UserService = /** @class */ (function () {
     UserService.prototype.getCurrentUser = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.http.get('http://localhost:9000/api/auth/me').toPromise().then(function (response) {
-                resolve(response.json());
+            return _this.authHttp.get('http://localhost:9000/api/auth/me').toPromise().then(function (response) {
+                resolve(true);
             })
-                .catch(function () {
-                reject();
+                .catch(function (err) {
+                reject(false);
             });
         });
     };
     UserService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
+        __metadata("design:paramtypes", [http_1.Http, angular2_jwt_1.AuthHttp])
     ], UserService);
     return UserService;
 }());
@@ -434,7 +559,7 @@ exports.UserService = UserService;
 
 /***/ }),
 
-/***/ "./src/app/utils.service.ts":
+/***/ "./src/app/util/utils.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -566,7 +691,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var AppSettings_1 = __webpack_require__("./src/app/AppSettings.ts");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var spin_service_1 = __webpack_require__("./src/app/service/spin.service.ts");
-var utils_service_1 = __webpack_require__("./src/app/utils.service.ts");
+var utils_service_1 = __webpack_require__("./src/app/util/utils.service.ts");
 var io = __webpack_require__("./node_modules/socket.io-client/lib/index.js");
 var WheelComponent = /** @class */ (function () {
     function WheelComponent(spinService, utilsService) {

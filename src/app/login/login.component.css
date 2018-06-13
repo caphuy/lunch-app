@@ -10,3 +10,10 @@
 :-moz-placeholder { /* Firefox 18- */
   color: #b8bac5;
 }
+
+#submit {
+  border-radius: 30px;
+  width: 80%;
+  background-color: #2d3445;
+  color: #4e5767;
+}

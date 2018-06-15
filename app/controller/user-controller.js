@@ -27,7 +27,7 @@ module.exports = {
         ]);
       } else {
         const token = authService.createToken({id: data});
-        req.token = token;
+        req.token = token; 
         authService.sendToken(req, res);
       }
     }).catch(err => {

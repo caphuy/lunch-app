@@ -11,9 +11,42 @@
   color: #b8bac5;
 }
 
-#submit {
+#login-form {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+/* #submit {
   border-radius: 30px;
   width: 80%;
   background-color: #2d3445;
   color: #4e5767;
+} */
+
+.login-input {
+  background-color: transparent;
+  border: 1px solid #6c757d;
+  border-radius: 6px;
+  height: 45px;
+  color: #6c757d;
+  display: block;
+  width: 89%;
+  padding-left: 10px;
+  margin: auto;
+  margin-bottom: 5px;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+.login-btn {
+  width: 89%;
+  display: block;
+  background-color: tomato;
+  color: cornsilk;
+  height: 40px;
+  border-radius: 6px;
+  margin: auto;
+  border: none;
 }

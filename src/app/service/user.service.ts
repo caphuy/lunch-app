@@ -38,6 +38,23 @@ export class UserService {
     });
   }
 
+  login(username, password) {
+    return new Promise((resolve, reject) => {
+      this.http.post('http://localhost:9000/api/signin', {username: username, password: password})
+      .toPromise()
+      .then(response => {
+        const token = response.headers.get('x-auth-token');
+        if (token) {
+          localStorage.setItem('id_token', token);
+        }
+        resolve(response.json());
+      })
+      .catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
   isLoggedIn() {
     return new Promise((resolve, reject) => {
       this.getCurrentUser().then(data => {

@@ -337,14 +337,14 @@ exports.AuthGuard = AuthGuard;
 /***/ "./src/app/login/login.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "::-webkit-input-placeholder { /* Chrome/Opera/Safari */\r\n  color: #b8bac5;\r\n}\r\n::-moz-placeholder { /* Firefox 19+ */\r\n  color: #b8bac5;\r\n}\r\n:-ms-input-placeholder { /* IE 10+ */\r\n  color: #b8bac5;\r\n}\r\n:-moz-placeholder { /* Firefox 18- */\r\n  color: #b8bac5;\r\n}\r\n#submit {\r\n  border-radius: 30px;\r\n  width: 80%;\r\n  background-color: #2d3445;\r\n  color: #4e5767;\r\n}"
+module.exports = "::-webkit-input-placeholder { /* Chrome/Opera/Safari */\r\n  color: #b8bac5;\r\n}\r\n::-moz-placeholder { /* Firefox 19+ */\r\n  color: #b8bac5;\r\n}\r\n:-ms-input-placeholder { /* IE 10+ */\r\n  color: #b8bac5;\r\n}\r\n:-moz-placeholder { /* Firefox 18- */\r\n  color: #b8bac5;\r\n}\r\n#login-form {\r\n  margin-bottom: 30px;\r\n  margin-top: 30px;\r\n}\r\n/* #submit {\r\n  border-radius: 30px;\r\n  width: 80%;\r\n  background-color: #2d3445;\r\n  color: #4e5767;\r\n} */\r\n.login-input {\r\n  background-color: transparent;\r\n  border: 1px solid #6c757d;\r\n  border-radius: 6px;\r\n  height: 45px;\r\n  color: #6c757d;\r\n  display: block;\r\n  width: 89%;\r\n  padding-left: 10px;\r\n  margin: auto;\r\n  margin-bottom: 5px;\r\n}\r\ntextarea:focus, input:focus{\r\n  outline: none;\r\n}\r\n.login-btn {\r\n  width: 89%;\r\n  display: block;\r\n  background-color: tomato;\r\n  color: cornsilk;\r\n  height: 40px;\r\n  border-radius: 6px;\r\n  margin: auto;\r\n  border: none;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"col-sm-4\">\n    <form (ngSubmit)=\"onSubmit()\">\n      <div class=\"form-group\">\n        <input type=\"text\" placeholder=\"USERNAME\" class=\"form-control\" id=\"username\" />\n      </div>\n      <div class=\"form-group\">\n        <input type=\"password\" placeholder=\"PASSWORD\" class=\"form-control\" id=\"password\" />\n      </div>\n\n      <button id=\"submit\" type=\"submit\" class=\"btn btn-success\">Login</button>\n    </form>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div id=\"login-form\" class=\"col-sm-4\">\n    <form (ngSubmit)=\"onSubmit()\">\n      <input type=\"text\" class=\"login-input\" placeholder=\"username\" id=\"username\" />\n      <input type=\"password\" class=\"login-input\" placeholder=\"password\" id=\"password\" />\n      <button class=\"login-btn\" id=\"submit\" type=\"submit\">Login</button>\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -524,6 +524,23 @@ var UserService = /** @class */ (function () {
                     reject();
                 }
             }, { scope: 'public_profile,email' });
+        });
+    };
+    UserService.prototype.login = function (username, password) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.post('http://localhost:9000/api/signin', { username: username, password: password })
+                .toPromise()
+                .then(function (response) {
+                var token = response.headers.get('x-auth-token');
+                if (token) {
+                    localStorage.setItem('id_token', token);
+                }
+                resolve(response.json());
+            })
+                .catch(function (err) {
+                reject(err);
+            });
         });
     };
     UserService.prototype.isLoggedIn = function () {

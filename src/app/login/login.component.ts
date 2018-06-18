@@ -11,6 +11,9 @@ import { UserService } from './../service/user.service';
 
 export class LoginComponent implements OnInit {
 
+  username: String = '';
+  sendUsername: String = '';
+
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {

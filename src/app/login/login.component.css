@@ -48,5 +48,15 @@ textarea:focus, input:focus{
   height: 40px;
   border-radius: 6px;
   margin: auto;
+  margin-top: 5px;
   border: none;
+}
+
+.or {
+  margin: auto;
+  color: #6c757d;
+  margin: 0 auto;
+  width: 40px;
+  text-align: center;
+  display: block;
 }

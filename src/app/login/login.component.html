@@ -1,9 +1,11 @@
 <div class="container">
   <div id="login-form" class="col-sm-4">
     <form (ngSubmit)="onSubmit()">
-      <input type="text" class="login-input" placeholder="username" id="username" />
+      <input type="text" [(ngModel)]="username" class="login-input" placeholder="username" name="username" id="username" />
       <input type="password" class="login-input" placeholder="password" id="password" />
       <button class="login-btn" id="submit" type="submit">Login</button>
+      <span class="or">-or-</span>
+      <img src="../../favicon.ico" />
     </form>
   </div>
 </div>

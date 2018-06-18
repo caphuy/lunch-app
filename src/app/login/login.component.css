@@ -11,9 +11,17 @@
   color: #b8bac5;
 }
 
+#login-title {
+  margin: auto;
+  display: block;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
 #login-form {
   margin-bottom: 30px;
   margin-top: 30px;
+  max-width: 400px;
 }
 
 /* #submit {
@@ -34,6 +42,12 @@
   padding-left: 10px;
   margin: auto;
   margin-bottom: 5px;
+
+}
+
+.login-input:focus {
+  color: transparent;
+  text-shadow: 0px 0px 0px #666;
 }
 
 textarea:focus, input:focus{
@@ -55,8 +69,16 @@ textarea:focus, input:focus{
 .or {
   margin: auto;
   color: #6c757d;
-  margin: 0 auto;
   width: 40px;
   text-align: center;
   display: block;
+  margin-top: 7px;
+  margin-bottom: 7px;
 }
+
+#icon-container {
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+

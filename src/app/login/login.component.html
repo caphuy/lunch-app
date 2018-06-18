@@ -1,11 +1,27 @@
-<div class="container">
-  <div id="login-form" class="col-sm-4">
-    <form (ngSubmit)="onSubmit()">
-      <input type="text" [(ngModel)]="username" class="login-input" placeholder="username" name="username" id="username" />
-      <input type="password" class="login-input" placeholder="password" id="password" />
-      <button class="login-btn" id="submit" type="submit">Login</button>
-      <span class="or">-or-</span>
-      <img src="../../favicon.ico" />
-    </form>
-  </div>
+<div id="login-form" class="col-sm-4">
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" [(ngModel)]="username" class="login-input" placeholder="username" name="username" id="username" />
+    <input type="password" class="login-input" placeholder="password" id="password" />
+    <button class="login-btn" id="submit" type="submit">Login</button>
+    <span class="or">- or -</span>
+    <div id="icon-container">
+      <a href="javascript:void(0);" (click)="fbLogin()">
+        <img src="../../assets/img/icon_facebook.png" />
+      </a>
+      <a href="javascript:void(0);" (click)="fbLogin()">
+        <img src="../../assets/img/icon_google+.png" />
+      </a>
+      <a href="javascript:void(0);" (click)="fbLogin()">
+        <img src="../../assets/img/icon_tweet.png" />
+      </a>
+    </div>
+    <!-- <div>
+      <a href="javascript:void(0);">
+        <span>Forget password?</span>
+      </a>
+      <a href="javascript:void(0);">
+        <span>Go as guest</span>
+      </a>
+    </div> -->
+  </form>
 </div>

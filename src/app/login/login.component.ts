@@ -19,12 +19,18 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  async onSubmit() {
-    this.userService.fbLogin().then(data => {
-      this.router.navigate(['/dashboard']);
-    }).catch(err => {
-      console.log(err);
-    });
+  async fbLogin() {
+    console.log('a');
+    // this.userService.fbLogin().then(data => {
+    //   this.router.navigate(['/dashboard']);
+    // }).catch(err => {
+    //   console.log(err);
+    // });
+    // return false;
+  }
+
+  onSubmit() {
+    console.log('a');
   }
 
 }

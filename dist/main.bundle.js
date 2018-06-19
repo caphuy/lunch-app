@@ -412,14 +412,19 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.fbLogin = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
-                console.log('a');
+                this.userService.fbLogin().then(function (data) {
+                    _this.router.navigate(['/dashboard']);
+                }).catch(function (err) {
+                    console.log(err);
+                });
                 return [2 /*return*/];
             });
         });
     };
     LoginComponent.prototype.onSubmit = function () {
-        console.log('a');
+        console.log('go login');
     };
     LoginComponent = __decorate([
         core_1.Component({
@@ -502,12 +507,16 @@ var UserService = /** @class */ (function () {
             version: 'v2.8'
         });
     }
+    /**
+     * facebook login
+     *
+     */
     UserService.prototype.fbLogin = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             FB.login(function (result) {
                 if (result.authResponse) {
-                    return _this.http.post('http://localhost:9000/auth/facebook', { access_token: result.authResponse.accessToken })
+                    return _this.http.post('/auth/facebook', { access_token: result.authResponse.accessToken })
                         .toPromise()
                         .then(function (response) {
                         var token = response.headers.get('x-auth-token');
@@ -526,10 +535,16 @@ var UserService = /** @class */ (function () {
             }, { scope: 'public_profile,email' });
         });
     };
+    /**
+     * normal login
+     *
+     * @param username
+     * @param password
+     */
     UserService.prototype.login = function (username, password) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            _this.http.post('http://localhost:9000/api/signin', { username: username, password: password })
+            _this.http.post('/api/signin', { username: username, password: password })
                 .toPromise()
                 .then(function (response) {
                 var token = response.headers.get('x-auth-token');
@@ -543,6 +558,10 @@ var UserService = /** @class */ (function () {
             });
         });
     };
+    /**
+     * check is logged in
+     *
+     */
     UserService.prototype.isLoggedIn = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
@@ -554,10 +573,14 @@ var UserService = /** @class */ (function () {
             });
         });
     };
+    /**
+     * get current user
+     *
+     */
     UserService.prototype.getCurrentUser = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.authHttp.get('http://localhost:9000/api/auth/me').toPromise().then(function (response) {
+            return _this.authHttp.get('/api/auth/me').toPromise().then(function (response) {
                 resolve(true);
             })
                 .catch(function (err) {

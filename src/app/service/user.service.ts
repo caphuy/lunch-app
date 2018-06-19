@@ -15,11 +15,15 @@ export class UserService {
     });
   }
 
+  /**
+   * facebook login
+   *
+   */
   fbLogin() {
     return new Promise((resolve, reject) => {
       FB.login(result => {
         if (result.authResponse) {
-          return this.http.post('http://localhost:9000/auth/facebook', {access_token: result.authResponse.accessToken})
+          return this.http.post('/auth/facebook', {access_token: result.authResponse.accessToken})
           .toPromise()
           .then(response => {
             const token = response.headers.get('x-auth-token');
@@ -38,9 +42,15 @@ export class UserService {
     });
   }
 
+  /**
+   * normal login
+   *
+   * @param username
+   * @param password
+   */
   login(username, password) {
     return new Promise((resolve, reject) => {
-      this.http.post('http://localhost:9000/api/signin', {username: username, password: password})
+      this.http.post('/api/signin', {username: username, password: password})
       .toPromise()
       .then(response => {
         const token = response.headers.get('x-auth-token');
@@ -55,6 +65,10 @@ export class UserService {
     });
   }
 
+  /**
+   * check is logged in
+   *
+   */
   isLoggedIn() {
     return new Promise((resolve, reject) => {
       this.getCurrentUser().then(data => {
@@ -66,9 +80,13 @@ export class UserService {
     });
   }
 
+  /**
+   * get current user
+   *
+   */
   getCurrentUser() {
     return new Promise((resolve, reject) => {
-      return this.authHttp.get('http://localhost:9000/api/auth/me').toPromise().then(response => {
+      return this.authHttp.get('/api/auth/me').toPromise().then(response => {
         resolve(true);
       })
       .catch((err) => {
